@@ -30,9 +30,9 @@ public class PokemonNPC : MonoBehaviour
         if (_isMiniGameActive || _isMiniGameFinished || _isWaitingForMiniGame)
             return; // Не запускаем мини-игру повторно
 
-        string pokemonName = ((Ink.Runtime.StringValue)DialogueManager
-            .GetInstance()
-            .GetVariablesState("pokemon_name")).value;
+        DialogueManager dialogeManager = DialogueManager.GetInstance();
+
+        string pokemonName = ((Ink.Runtime.StringValue)dialogeManager.GetVariablesState("pokemon_name")).value;
 
         if (pokemonName == "Charmander")
         {

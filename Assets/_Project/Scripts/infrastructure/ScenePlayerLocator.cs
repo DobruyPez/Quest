@@ -19,6 +19,12 @@ namespace Assets.Scripts.infrastructure
         {
             BindCameraTransform();
             InstantiateMainCharacter();
+            //BindCameraController();
+        }
+
+        private void BindCameraController()
+        {
+            Container.Bind<CameraMovementController>().FromComponentInHierarchy().AsSingle();
         }
 
         private void InstantiateMainCharacter()
@@ -39,15 +45,15 @@ namespace Assets.Scripts.infrastructure
                 .AsSingle();
 
             // Выполняем инъекцию вручную, так как объект уже был создан
-            Container.Inject(playerMoveController);
+            //Container.QueueForInject(playerMoveController);
         }
 
         private void BindCameraTransform()
         {
             Container
-                            .Bind<Transform>()
-                            .FromInstance(CameraTransform)
-                            .AsSingle();
+                        .Bind<Transform>()
+                        .FromInstance(CameraTransform)
+                        .AsSingle();
         }
     }
 }
