@@ -30,10 +30,9 @@ public class CameraMovementController : MonoBehaviour
     {
         if (_player == null)
         {
-            _player = FindObjectOfType<PlayerMoveController>()?.transform;
-            //Debug.LogError("Player is not assigned!");
-            //enabled = false;
-            //return;
+            Debug.LogError("Player is not assigned!");
+            enabled = false;
+            return;
         }
 
         if (_centerLocationObj == null)

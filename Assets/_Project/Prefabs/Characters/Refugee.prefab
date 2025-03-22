@@ -1507,7 +1507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _visualCue: {fileID: 1707939201282068015}
-  _inkJSON: {fileID: 4900000, guid: 4c052aeb100ccc045bd37996a0de57a9, type: 3}
+  _inkJSON: {fileID: 4900000, guid: b439171c3c73d9a42bc0bda0202bb765, type: 3}
 --- !u!65 &8834917962392287517
 BoxCollider:
   m_ObjectHideFlags: 0

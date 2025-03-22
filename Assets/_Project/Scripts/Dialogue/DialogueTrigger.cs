@@ -31,9 +31,10 @@ public class DialogueTrigger : MonoBehaviour
             //    DialogueManager.GetInstance().EnterDialogueMode(_inkJSON);
             //}
 
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                DialogueManager.GetInstance().EnterDialogueMode(_inkJSON);
+                DialogueManager dialogeManager = DialogueManager.GetInstance();
+                dialogeManager.EnterDialogueMode(_inkJSON);
             }
         }
         else
