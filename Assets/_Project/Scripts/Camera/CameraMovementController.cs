@@ -4,7 +4,7 @@ using Zenject;
 public class CameraMovementController : MonoBehaviour
 {
     [SerializeField] private Transform _player; // Ссылка на игрока
-    [SerializeField] private Transform cameraTransform; // Ссылка на камеру
+    [SerializeField] private Transform _cameraTransform; // Ссылка на камеру
     [SerializeField] private Transform _centerLocationObj; // Центр локации с границами движения камеры
     [SerializeField] private float followDelay = 0.3f; // Запаздывание камеры
     [SerializeField] private Vector3 offset = new Vector3(0, 10, -10); // Смещение камеры
@@ -22,6 +22,7 @@ public class CameraMovementController : MonoBehaviour
     [Inject]
     private void Construct(PlayerMoveController player)
     {
+        Debug.Log("Player injected: " + player);
         _player = player.gameObject.transform;
     }
 
@@ -74,9 +75,9 @@ public class CameraMovementController : MonoBehaviour
 
     void FollowPlayer()
     {
-        if (_player == null || cameraTransform == null) return;
+        if (_player == null || _cameraTransform == null) return;
 
-        float cameraAngleY = cameraTransform.eulerAngles.y * Mathf.Deg2Rad;
+        float cameraAngleY = _cameraTransform.eulerAngles.y * Mathf.Deg2Rad;
         Vector3 rotatedOffset = new Vector3(
             offset.x * Mathf.Cos(cameraAngleY) - offset.z * Mathf.Sin(cameraAngleY),
             offset.y,

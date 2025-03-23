@@ -260,7 +260,9 @@ public class DialogueManager : MonoBehaviour
         if (_canContinueToNextLine)
         {
             _currentStory.ChooseChoiceIndex(choiceIndex);
-            InputManager.GetInstance().RegisterSubmitPressed();//??
+            InputManager inputManager = InputManager.GetInstance();
+
+            inputManager.RegisterSubmitPressed();//??
             ContinueStory();
         }
     }

@@ -34,6 +34,7 @@ public class MiniGameInstaller : MonoInstaller
         BindCameraTransform();
         BindPlayer();
         BindEnemies();
+        BindMineSpawner();
     }
 
     private void BindMineSpawner()
