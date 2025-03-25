@@ -458,6 +458,8 @@ MonoBehaviour:
   buttonImage: {fileID: 600446118}
   normalSprite: {fileID: 21300000, guid: 474a0dc2046997648b50bc0c83e75388, type: 3}
   hoverSprite: {fileID: 21300000, guid: b89908aa4cbb07d45ba05173d2a5b460, type: 3}
+  hoverSound: {fileID: 8300000, guid: d8f42014edbccc0439ea92b410ad4557, type: 3}
+  clickSound: {fileID: 8300000, guid: deff2fb538f3b7a44aa556210c060408, type: 3}
 --- !u!114 &600446117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,7 +564,7 @@ GameObject:
   m_Component:
   - component: {fileID: 780228223}
   - component: {fileID: 780228222}
-  - component: {fileID: 780228221}
+  - component: {fileID: 780228224}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -570,18 +572,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &780228221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 780228220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71d2acf30b14b694981462033b216238, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &780228222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,6 +600,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &780228224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780228220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71d2acf30b14b694981462033b216238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &797224717
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,6 +761,8 @@ MonoBehaviour:
   buttonImage: {fileID: 797224720}
   normalSprite: {fileID: 21300000, guid: 96ac3f70c4966834bb39dcc10b7fdb43, type: 3}
   hoverSprite: {fileID: 21300000, guid: 474a0dc2046997648b50bc0c83e75388, type: 3}
+  hoverSound: {fileID: 8300000, guid: d8f42014edbccc0439ea92b410ad4557, type: 3}
+  clickSound: {fileID: 8300000, guid: deff2fb538f3b7a44aa556210c060408, type: 3}
 --- !u!1 &1163017565
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,8 +1056,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 780228221}
-        m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
+      - m_Target: {fileID: 780228224}
+        m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
@@ -1117,6 +1121,8 @@ MonoBehaviour:
   buttonImage: {fileID: 1222735120}
   normalSprite: {fileID: 21300000, guid: 96ac3f70c4966834bb39dcc10b7fdb43, type: 3}
   hoverSprite: {fileID: 21300000, guid: 474a0dc2046997648b50bc0c83e75388, type: 3}
+  hoverSound: {fileID: 8300000, guid: d8f42014edbccc0439ea92b410ad4557, type: 3}
+  clickSound: {fileID: 8300000, guid: deff2fb538f3b7a44aa556210c060408, type: 3}
 --- !u!1 &1254204674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,6 +1458,8 @@ MonoBehaviour:
   buttonImage: {fileID: 1496013623}
   normalSprite: {fileID: 21300000, guid: 474a0dc2046997648b50bc0c83e75388, type: 3}
   hoverSprite: {fileID: 21300000, guid: b89908aa4cbb07d45ba05173d2a5b460, type: 3}
+  hoverSound: {fileID: 8300000, guid: d8f42014edbccc0439ea92b410ad4557, type: 3}
+  clickSound: {fileID: 8300000, guid: deff2fb538f3b7a44aa556210c060408, type: 3}
 --- !u!1 &1640824500
 GameObject:
   m_ObjectHideFlags: 0
