@@ -10,6 +10,7 @@ TagManager:
   - TextField
   - MixPannelElement
   - DisplayForPickUp
+  - InteractionIndicator
   layers:
   - Default
   - TransparentFX

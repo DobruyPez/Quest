@@ -1,7 +1,5 @@
 INCLUDE global.ink
 
-VAR text_finished = false
-
 (В голове мелькает: как же эти раздолбаи мне уже надоели, встань и сделай хоть что-то)#speaker:Петро #portrait:ms_yellow_neutral #layout:left
 ->mainRefugeeMainRoom
 
@@ -16,7 +14,6 @@ VAR text_finished = false
 ->gate1RefugeeMainRoom
 +[Проявить агрессию]
 ->gate2RefugeeMainRoom
-~ text_finished = true
 ->DONE
 
 ===gate1RefugeeMainRoom===
@@ -29,5 +26,5 @@ VAR text_finished = false
 ===gate2RefugeeMainRoom===
 Твои слёзы мне противны. Вставай. Или я сделаю из тебя половик.#speaker:Петро #portrait:ms_yellow_neutral #layout:left
 (сквозь хрип): Хоть зарежь. Расскажешь всем, как геройствовал!#speaker:Бродяга #portrait:brodiga #layout:right
-~ pokemon_name = "Charmander"
+~ EndOfDialoge = true
 ->DONE

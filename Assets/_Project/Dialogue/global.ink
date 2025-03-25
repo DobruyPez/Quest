@@ -1,1 +1,2 @@
-VAR pokemon_name = ""
+VAR PowerCheckStart = false
+VAR TalkedWithMagnate = false

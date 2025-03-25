@@ -14,14 +14,16 @@ public class InteractManager : MonoBehaviour
 
         if (currentTriggerable != null)
         {
-            // Ищем компонент InteractionIndicator на объекте
-            interactionIndicator = collider.gameObject.transform.Find("InteractionIndicator")?.gameObject;
-
-            if (interactionIndicator != null)
+            var indicators = collider.gameObject.GetComponentsInChildren<Transform>(true);
+            foreach (var indicator in indicators)
             {
-                interactionIndicator.SetActive(true); // Активируем индикатор
+                if (indicator.CompareTag("InteractionIndicator"))
+                {
+                    interactionIndicator = indicator.gameObject;
+                    interactionIndicator.SetActive(true);
+                    break;
+                }
             }
-            //Debug.Log("Игрок может взаимодействовать с объектом.");
         }
     }
 
@@ -31,12 +33,11 @@ public class InteractManager : MonoBehaviour
         {
             if (interactionIndicator != null)
             {
-                interactionIndicator.SetActive(false); // Деактивируем индикатор
+                interactionIndicator.SetActive(false); 
             }
 
             currentTriggerable = null;
-            interactionIndicator = null; // Очищаем ссылку на индикатор
-            //Debug.Log("Игрок покинул зону взаимодействия.");
+            interactionIndicator = null; 
         }
     }
 
@@ -68,7 +69,7 @@ public class InteractManager : MonoBehaviour
 
             if (interactionIndicator != null)
             {
-                interactionIndicator.SetActive(false); // Деактивируем индикатор после взаимодействия
+                interactionIndicator.SetActive(false); 
             }
         }
     }

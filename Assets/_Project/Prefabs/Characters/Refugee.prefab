@@ -687,7 +687,7 @@ GameObject:
   - component: {fileID: 1929538231129987272}
   m_Layer: 0
   m_Name: CylinderVisualCue
-  m_TagString: Untagged
+  m_TagString: InteractionIndicator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -700,12 +700,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1707939201282068015}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.44355652, y: 0.5506883, z: 0.55068827, w: 0.4435566}
-  m_LocalPosition: {x: 0.34, y: 2.742, z: -0.16}
-  m_LocalScale: {x: 0.4183099, y: 0.07797999, z: 1}
+  m_LocalRotation: {x: -0.38704365, y: -0.5949083, z: -0.59050006, w: 0.38417578}
+  m_LocalPosition: {x: -0.41885626, y: 2.7813942, z: -0.09182793}
+  m_LocalScale: {x: 0.41830996, y: 0.07798, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5056501669252699688}
+  m_Father: {fileID: 7928294922728815785}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &3373156350281345172
 MeshFilter:
@@ -1470,8 +1470,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7928294922728815785}
-  - component: {fileID: 4828053816282018410}
   - component: {fileID: 8834917962392287517}
+  - component: {fileID: 6061360253521357141}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -1487,27 +1487,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3819963950370752025}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.001155437, y: 0.95049715, z: -0.0035345983, w: -0.31071097}
-  m_LocalPosition: {x: -0.04, y: -0.04, z: 0.03}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1509548703033591925}
   m_Father: {fileID: 5056501669252699688}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4828053816282018410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3819963950370752025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd8550eeb1a066d4287e094d5a211f2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _visualCue: {fileID: 1707939201282068015}
-  _inkJSON: {fileID: 4900000, guid: b439171c3c73d9a42bc0bda0202bb765, type: 3}
 --- !u!65 &8834917962392287517
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1529,6 +1516,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.4048562, y: 2.467063, z: 2.770196}
   m_Center: {x: 0.02381139, y: 0.7335334, z: 0.11314618}
+--- !u!114 &6061360253521357141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819963950370752025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a522dbadf53973a47bd8efdef3f41b5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inkJSON: {fileID: 4900000, guid: b439171c3c73d9a42bc0bda0202bb765, type: 3}
 --- !u!1 &3822930673503265528
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,7 +1591,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1509548703033591925}
   - {fileID: 7928294922728815785}
   - {fileID: 4285211585055372184}
   - {fileID: 1468828912236465656}
