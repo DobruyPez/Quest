@@ -189,10 +189,10 @@
                 {
                     "name": "",
                     "id": "094e2a18-0527-49cf-b4bf-e88113473348",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/Space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false

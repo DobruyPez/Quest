@@ -32,31 +32,35 @@ public class PokemonNPC : MonoBehaviour
 
         DialogueManager dialogeManager = DialogueManager.GetInstance();
 
-        string pokemonName = ((Ink.Runtime.StringValue)dialogeManager.GetVariablesState("pokemon_name")).value;
+        bool powerCheckStart = ((Ink.Runtime.BoolValue)dialogeManager.GetVariablesState("PowerCheckStart")).value;
 
-        if (pokemonName == "Charmander")
+        if (!dialogeManager.DialogueIsPlaying)
         {
-            StartMiniGame();
-        }
-        if (_menu != null)
-        {
-            _winPanel = _menu.transform.Find("WinPanel")?.gameObject;
-            _losePanel = _menu.transform.Find("LosePanel")?.gameObject;
-
-            if (_winPanel == null || _losePanel == null)
+            if (powerCheckStart)
             {
-                Debug.LogWarning("Панели WinPanel или LosePanel не найдены в объекте _menu.");
+                StartMiniGame();
+            }
+            if (_menu != null)
+            {
+                _winPanel = _menu.transform.Find("WinPanel")?.gameObject;
+                _losePanel = _menu.transform.Find("LosePanel")?.gameObject;
+
+                if (_winPanel == null || _losePanel == null)
+                {
+                    Debug.LogWarning("Панели WinPanel или LosePanel не найдены в объекте _menu.");
+                }
+                else
+                {
+                    // Деактивируем панели при старте
+                    _winPanel.SetActive(false);
+                    _losePanel.SetActive(false);
+                }
             }
             else
             {
-                // Деактивируем панели при старте
-                _winPanel.SetActive(false);
-                _losePanel.SetActive(false);
+                Debug.LogWarning("Объект _menu не назначен.");
             }
-        }
-        else
-        {
-            Debug.LogWarning("Объект _menu не назначен.");
+
         }
     }
 
