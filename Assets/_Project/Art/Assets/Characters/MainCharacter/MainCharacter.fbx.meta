@@ -3,7 +3,12 @@ guid: 1cba6d3a80061d14fb0b4306a06a85f0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Magnat
+    second: {fileID: 2100000, guid: 01fd3f8c72d1beb4a917d24327ed2a56, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
