@@ -5,23 +5,30 @@ using UnityEngine;
 public class InteractManager : MonoBehaviour
 {
     private ITriggerable currentTriggerable;
-    private GameObject interactionIndicator; // Добавляем переменную для хранения индикатора
+    private GameObject interactionIndicator;
+    private bool hasInteracted = false; // Флаг, указывающий на то, что взаимодействие уже произошло
+    private Collider currentTriggerCollider; // Запоминаем текущий коллайдер триггера
 
     private void OnTriggerEnter(Collider collider)
     {
-        currentTriggerable = null;
-        currentTriggerable = collider.gameObject.GetComponent<ITriggerable>();
-
-        if (currentTriggerable != null)
+        // Если это новый триггер или тот же, но мы выходили и зашли снова
+        if (currentTriggerCollider != collider || !hasInteracted)
         {
-            var indicators = collider.gameObject.GetComponentsInChildren<Transform>(true);
-            foreach (var indicator in indicators)
+            currentTriggerable = collider.gameObject.GetComponent<ITriggerable>();
+            currentTriggerCollider = collider;
+            hasInteracted = false; // Сбрасываем флаг при входе в новый триггер
+
+            if (currentTriggerable != null)
             {
-                if (indicator.CompareTag("InteractionIndicator"))
+                var indicators = collider.gameObject.GetComponentsInChildren<Transform>(true);
+                foreach (var indicator in indicators)
                 {
-                    interactionIndicator = indicator.gameObject;
-                    interactionIndicator.SetActive(true);
-                    break;
+                    if (indicator.CompareTag("InteractionIndicator"))
+                    {
+                        interactionIndicator = indicator.gameObject;
+                        interactionIndicator.SetActive(true);
+                        break;
+                    }
                 }
             }
         }
@@ -29,47 +36,36 @@ public class InteractManager : MonoBehaviour
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.GetComponent<ITriggerable>() == currentTriggerable)
+        if (collider == currentTriggerCollider)
         {
             if (interactionIndicator != null)
             {
-                interactionIndicator.SetActive(false); 
+                interactionIndicator.SetActive(false);
             }
 
             currentTriggerable = null;
-            interactionIndicator = null; 
-        }
-    }
-
-    private void OnTriggerStay(Collider collider)
-    {
-        currentTriggerable = collider.gameObject.GetComponent<ITriggerable>();
-
-        if (currentTriggerable != null)
-        {
-            //Debug.Log("Игрок находится внутри триггера и может взаимодействовать.");
+            currentTriggerCollider = null;
+            interactionIndicator = null;
+            hasInteracted = false; // Сбрасываем флаг при выходе из триггера
         }
     }
 
     private void Update()
     {
-        bool isInteract = InputManager.GetInstance().GetInteractPressed();
-        if (isInteract)
+        if (currentTriggerable != null && !hasInteracted)
         {
-            Debug.Log("isInteract " + isInteract);
-        }
-        if (currentTriggerable != null)
-        {
-            Debug.Log("currentTriggerable " + currentTriggerable);
-        }
-        if (currentTriggerable != null && isInteract)
-        {
-            //Debug.Log("Игрок взаимодействует с объектом.");
-            currentTriggerable.Trrigered();
+            bool isInteract = InputManager.GetInstance().GetInteractPressed();
 
-            if (interactionIndicator != null)
+            if (isInteract)
             {
-                interactionIndicator.SetActive(false); 
+                Debug.Log("Interacting with: " + currentTriggerable);
+                currentTriggerable.Trrigered();
+                hasInteracted = true; // Устанавливаем флаг после взаимодействия
+
+                if (interactionIndicator != null)
+                {
+                    interactionIndicator.SetActive(false);
+                }
             }
         }
     }

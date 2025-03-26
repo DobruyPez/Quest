@@ -1,30 +1,46 @@
 INCLUDE global.ink
 
-(В голове мелькает: как же эти раздолбаи мне уже надоели, встань и сделай хоть что-то)#speaker:Петро #portrait:ms_yellow_neutral #layout:left
-->mainRefugeeMainRoom
+VAR ActiveSelf = true
+// ~ ActiveSelf = TalkedWithMagnate
 
-==mainRefugeeMainRoom===
-Слушай, хватит уже болтать ерунду. Нам нужно готовиться к битве и решать насущные проблемы, а не устроить тут балаган. Давай спокойно.#speaker:Петро #portrait:ms_yellow_neutral #layout:left
-(Петро останавливается в полушаге от бродяги, пальцы непроизвольно сжимаются в кулак. Взгляд скользит по грязному лицу бродяги — и дальше, туда, где за мутными глазами лишь пустота.)
-(тихо, сквозь зубы): Слушай, тебе наверняка уже многие говорили хватит уже пьянствовать попусту. Нам нужно готовиться к битве и решать насущные проблемы, а не устраивать тут балаган.
-(Бродяга поднимает голову, трясущейся рукой прижимая к груди пустую бутылку. Смех вырывается хриплым кашлем, пахнет перегаром и кровью.)#speaker:Бродяга #portrait:brodiga #layout:right
-(сдавленно): Ты... ты же сам знаешь, чем это кончится. Война не имеет смысла. Больше ничего не имеет смысла для меня…#speaker:Бродяга #portrait:brodiga #layout:right
-(Петро резко хватает его за воротник, приподнимая так, что костяшки впиваются в грязную ткань. Дыхание ровное, ледяное — только веко дёргается.)#speaker:Петро #portrait:ms_yellow_neutral #layout:left
-+[Показать кулон]
-->gate1RefugeeMainRoom
-+[Проявить агрессию]
-->gate2RefugeeMainRoom
-->DONE
+=== mainRefugeeMainRoom ===
+// Проверка условия без использования return
+{ 
+    - ActiveSelf:
+        <i>В голове мелькает: как же эти раздолбаи мне уже надоели, встань и сделай хоть что-то</i>
+        #speaker:Петро 
+        #portrait:ms_yellow_neutral 
+        #layout:left
+        -> mainRefugeeMainRoom_continue
+    - else:
+        // Можно либо ничего не делать, либо перейти в другой узел
+        -> mainRefugeeMainRoom_continue
+}
 
-===gate1RefugeeMainRoom===
-Видишь это? Мою семью убили так же. Я не готов расстрачивать свою жизнь из-за утраты и приложу все силы, чтобы отомстить. Или же ты хочешь сдохнуть без какого-то смысла ?#speaker:Петро #portrait:ms_yellow_neutral #layout:left
-Бродяга затихает. Его пальцы судорожно сжимают бутылку, взгляд прилипает к кулону. #speaker:Бродяга #portrait:brodiga #layout:right
-Ты... ты сам уже мёртв. Просто ещё не упал.#speaker:Бродяга #portrait:brodiga #layout:right
+=== mainRefugeeMainRoom_continue ===
+"Слушай, хватит уже болтать ерунду. Нам нужно готовиться к битве и решать насущные проблемы, а не устроить тут балаган. Давай спокойно."
+#speaker:Петро 
+#portrait:ms_yellow_neutral 
+#layout:left
 
-->DONE
+(Петро останавливается в полушаге от бродяги...)
 
-===gate2RefugeeMainRoom===
-Твои слёзы мне противны. Вставай. Или я сделаю из тебя половик.#speaker:Петро #portrait:ms_yellow_neutral #layout:left
-(сквозь хрип): Хоть зарежь. Расскажешь всем, как геройствовал!#speaker:Бродяга #portrait:brodiga #layout:right
-~ EndOfDialoge = true
-->DONE
+* [Показать кулон]
+    -> gate1RefugeeMainRoom
+* [Проявить агрессию]
+    -> gate2RefugeeMainRoom
+
+=== gate1RefugeeMainRoom ===
+"Видишь это? Мою семью убили так же..."
+#speaker:Петро 
+#portrait:ms_yellow_neutral 
+#layout:left
+-> END
+
+=== gate2RefugeeMainRoom ===
+"Твои слёзы мне противны..."
+#speaker:Петро 
+#portrait:ms_yellow_neutral 
+#layout:left
+~ PowerCheckStart = true
+-> END
