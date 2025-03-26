@@ -2603,7 +2603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartPoint: {fileID: 853399296}
-  Prefab: {fileID: 1851827150343390004, guid: d6788f10dc9149a43bc5c8d140f86326, type: 3}
+  Prefab: {fileID: 1025207163794879203, guid: 96e2899ba76152b4f9ee45c2b53e1ddb, type: 3}
   Parent: {fileID: 807985766}
   CameraTransform: {fileID: 92592447}
 --- !u!114 &538100252
@@ -3748,7 +3748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5e6ff3832f90d438eae926d49aa531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneName: CameraTest
+  SceneName: MainRoom
   SpawnPosition: {x: 20.42, y: -0.002110958, z: 13}
   SpawnEulerAngles: {x: 0, y: 90, z: 0}
 --- !u!65 &956613664

@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/MainRoom.unity
     guid: 0cfd04daddf73dd4ca5633b0a7a5157d
   - enabled: 1
+    path: Assets/_Project/Scenes/Storage.unity
+    guid: 71e63ff5d571dad4d80254a0a7e30136
+  - enabled: 1
+    path: Assets/_Project/Scenes/Forge.unity
+    guid: c3f5cef089365554680305d8086e1524
+  - enabled: 1
     path: Assets/_Project/Scenes/Kitchen.unity
     guid: 8f62bfa63d19bf540a086982ffb87184
   m_configObjects:
