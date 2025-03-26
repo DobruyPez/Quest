@@ -16,13 +16,8 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject _dialoguePanel;
-
-    //[SerializeField] private GameObject _continueIcon;
-
     [SerializeField] private TextMeshProUGUI _dialogueText;
-
     [SerializeField] private TextMeshProUGUI _displayNameText;
-
     [SerializeField] private Animator _portraitAnimator;
 
     private Animator _layoutAnimator;
@@ -33,9 +28,10 @@ public class DialogueManager : MonoBehaviour
     private TextMeshProUGUI[] _choicesText;
 
     private Story _currentStory;
-    public  bool DialogueIsPlaying { get; private set; }
+    public bool DialogueIsPlaying { get; private set; }
 
     private bool _canContinueToNextLine = false;
+    private bool _isSelectingChoice = false;
 
     private Coroutine _displayLineCoroutine;
 
@@ -85,6 +81,26 @@ public class DialogueManager : MonoBehaviour
         {
             return;
         }
+
+        // Обработка подтверждения выбора
+        if (_isSelectingChoice && InputManager.GetInstance().GetInteractPressed())
+        {
+            GameObject selectedObject = EventSystem.current.currentSelectedGameObject;
+            if (selectedObject != null)
+            {
+                for (int i = 0; i < _choices.Length; i++)
+                {
+                    if (_choices[i] == selectedObject)
+                    {
+                        MakeChoice(i);
+                        _isSelectingChoice = false;
+                        return;
+                    }
+                }
+            }
+        }
+
+        // Обработка продолжения диалога
         if (_canContinueToNextLine
             && _currentStory.currentChoices.Count == 0
             && InputManager.GetInstance().GetSubmitPressed())
@@ -96,12 +112,18 @@ public class DialogueManager : MonoBehaviour
     public void EnterDialogueMode(TextAsset inkJSON)
     {
         _currentStory = new Story(inkJSON.text);
+
+        if (_currentStory.variablesState["ActiveSelf"] is bool isActive && !isActive)
+        {
+            Debug.Log("Dialogue is not active - skipping");
+            return;
+        }
+
         DialogueIsPlaying = true;
         _dialoguePanel.SetActive(true);
 
         _dialogueVariables.StartListening(_currentStory);
 
-        //reset portrait, layout and speaker
         _displayNameText.text = "?";
         _portraitAnimator.Play("default");
         _layoutAnimator.Play("right");
@@ -151,10 +173,10 @@ public class DialogueManager : MonoBehaviour
         _dialogueText.text = line;
         _dialogueText.maxVisibleCharacters = 0;
 
-        //_continueIcon.SetActive(false);
         HideChoices();
 
         _canContinueToNextLine = false;
+        _isSelectingChoice = false;
 
         bool _isAddingRichTextTag = false;
 
@@ -181,7 +203,6 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        //_continueIcon.SetActive(true);
         DisplayChoices();
 
         _canContinueToNextLine = true;
@@ -189,6 +210,7 @@ public class DialogueManager : MonoBehaviour
 
     private void HideChoices()
     {
+        _choices[0].gameObject.transform.parent.gameObject.SetActive(false);
         foreach (GameObject choiceButton in _choices)
         {
             choiceButton.SetActive(false);
@@ -234,18 +256,24 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("More choices were given then the UI can support. Number of choices given: " + currentChoices.Count);
         }
 
-        int index = 0;
-        foreach (Choice choice in currentChoices)
+        if (currentChoices.Count > 0)
         {
-            _choices[index].gameObject.SetActive(true);
-            _choicesText[index].text = choice.text;
-            index++;
+            int index = 0;
+            _choices[index].gameObject.transform.parent.gameObject.SetActive(true);
+            foreach (Choice choice in currentChoices)
+            {
+                _choices[index].gameObject.SetActive(true);
+                _choicesText[index].text = choice.text;
+                index++;
+            }
+            for (int i = index; i < _choices.Length; i++)
+            {
+                _choices[i].gameObject.SetActive(false);
+            }
+
+            _isSelectingChoice = true;
+            StartCoroutine(SelectFirstChoice());
         }
-        for (int i = index; i < _choices.Length; i++)
-        {
-            _choices[i].gameObject.SetActive(false);
-        }
-        StartCoroutine(SelectFirstChoice());
     }
 
     private IEnumerator SelectFirstChoice()
@@ -260,9 +288,8 @@ public class DialogueManager : MonoBehaviour
         if (_canContinueToNextLine)
         {
             _currentStory.ChooseChoiceIndex(choiceIndex);
-            InputManager inputManager = InputManager.GetInstance();
-
-            inputManager.RegisterSubmitPressed();//??
+            InputManager.GetInstance().RegisterSubmitPressed();
+            _isSelectingChoice = false;
             ContinueStory();
         }
     }
@@ -277,15 +304,4 @@ public class DialogueManager : MonoBehaviour
         }
         return variableValue;
     }
-
-    // This method will get called anytime the application exits.
-    // Depending on your game, you may want to save variable state in other places.
-
-    //public void OnApplicationQuit()
-    //{
-    //    if (_dialogueVariables != null)
-    //    {
-    //        _dialogueVariables.SaveVariables();
-    //    }
-    //}
 }
