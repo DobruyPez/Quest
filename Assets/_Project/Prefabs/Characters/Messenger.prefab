@@ -872,7 +872,7 @@ GameObject:
   - component: {fileID: 7409887586852090332}
   m_Layer: 0
   m_Name: Trigger
-  m_TagString: Untagged
+  m_TagString: RefugeeSeatRequiredTrigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -927,6 +927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inkJSON: {fileID: 4900000, guid: fc83389091c2b3b4dbf0a26fc54df222, type: 3}
+  _requiredTriggers: []
 --- !u!1 &990817637253784763
 GameObject:
   m_ObjectHideFlags: 0
