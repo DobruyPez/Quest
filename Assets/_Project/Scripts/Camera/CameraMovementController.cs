@@ -7,8 +7,9 @@ public class CameraMovementController : MonoBehaviour
     [SerializeField] private Transform _cameraTransform; // Ссылка на камеру
     [SerializeField] private Transform _centerLocationObj; // Центр локации с границами движения камеры
     [SerializeField] private float followDelay = 0.3f; // Запаздывание камеры
-    [SerializeField] private Vector3 offset = new Vector3(0, 10, -10); // Смещение камеры
-    [SerializeField] private float tiltAngle = 50f; // Угол наклона камеры
+    [SerializeField] private Vector3 offset = new Vector3(0, 10, -10); // Смещение камеры (Y и Z)
+    [SerializeField] private float tiltAngle = 50f; // Угол наклона камеры (в градусах)
+    [SerializeField] private float rotationSpeed = 2f; // Скорость вращения камеры вокруг игрока
     [SerializeField] private Vector2 boundarySize = new Vector2(5f, 5f);
 
     [Header("Zoom Settings")]
@@ -18,6 +19,7 @@ public class CameraMovementController : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero; // Для плавного перемещения
     [SerializeField] private Vector3 squareCenter;
+    private float currentRotationAngle = 0f; // Текущий угол вращения вокруг игрока
 
     [Inject]
     private void Construct(PlayerMoveController player)
@@ -43,14 +45,14 @@ public class CameraMovementController : MonoBehaviour
         }
 
         Camera.main.orthographic = false;
-        transform.rotation = Quaternion.Euler(tiltAngle, 0, 0);
-
         squareCenter = _player.position;
+        HandleZoom(true);
     }
 
     void LateUpdate()
     {
         UpdateSquarePosition();
+        //HandleRotation(); 
         FollowPlayer();
         HandleZoom();
     }
@@ -59,7 +61,7 @@ public class CameraMovementController : MonoBehaviour
     {
         Vector3 playerPosition = _player.position;
         Vector3 boundarySize3d = new Vector3(boundarySize.x, 0, boundarySize.y) / 2;
-                
+
         float minX = squareCenter.x - boundarySize3d.x;
         float maxX = squareCenter.x + boundarySize3d.x;
         float minZ = squareCenter.z - boundarySize3d.z;
@@ -69,7 +71,18 @@ public class CameraMovementController : MonoBehaviour
             playerPosition.z < minZ || playerPosition.z > maxZ)
         {
             squareCenter = Vector3.SmoothDamp(squareCenter, playerPosition, ref velocity, followDelay);
-            //squareCenter = playerPosition;
+        }
+    }
+
+    void HandleRotation()
+    {
+        if (Input.GetKey(KeyCode.Q))
+        {
+            currentRotationAngle -= rotationSpeed * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            currentRotationAngle += rotationSpeed * Time.deltaTime;
         }
     }
 
@@ -77,18 +90,26 @@ public class CameraMovementController : MonoBehaviour
     {
         if (_player == null || _cameraTransform == null) return;
 
-        float cameraAngleY = _cameraTransform.eulerAngles.y * Mathf.Deg2Rad;
+        // 1. Рассчитываем направление камеры с учетом tiltAngle
+        // Теперь offset.y влияет на высоту, а offset.z - на расстояние
+        float horizontalDistance = offset.z;  // Полное расстояние в XZ плоскости
+        float verticalDistance = offset.y;    // Высота камеры
+
+        // 2. Вращаем смещение вокруг игрока с учетом currentRotationAngle
         Vector3 rotatedOffset = new Vector3(
-            offset.x * Mathf.Cos(cameraAngleY) - offset.z * Mathf.Sin(cameraAngleY),
-            offset.y,
-            offset.x * Mathf.Sin(cameraAngleY) + offset.z * Mathf.Cos(cameraAngleY)
+            Mathf.Sin(currentRotationAngle * Mathf.Deg2Rad) * horizontalDistance,
+            verticalDistance,
+            Mathf.Cos(currentRotationAngle * Mathf.Deg2Rad) * horizontalDistance
         );
 
-        float yOffsetFactor = 0.25f;
-        Vector3 cameraOffset = rotatedOffset + new Vector3(0, -offset.y * yOffsetFactor, 0);
-        Vector3 targetPosition = squareCenter + cameraOffset;
+        // 3. Наклоняем вектор смещения вниз на tiltAngle градусов
+        Quaternion tiltRotation = Quaternion.Euler(0, tiltAngle, 0);
+        Vector3 finalOffset = tiltRotation * rotatedOffset;
 
-        // Ограничение позиции камеры в пределах _centerLocationObj
+        // 4. Позиция камеры = позиция игрока + смещение
+        Vector3 targetPosition = squareCenter + finalOffset;
+
+        // 5. Ограничение позиции камеры в пределах _centerLocationObj
         Vector3 minBounds = _centerLocationObj.position - _centerLocationObj.localScale / 2;
         Vector3 maxBounds = _centerLocationObj.position + _centerLocationObj.localScale / 2;
 
@@ -96,8 +117,10 @@ public class CameraMovementController : MonoBehaviour
         targetPosition.y = Mathf.Clamp(targetPosition.y, minBounds.y, maxBounds.y);
         targetPosition.z = Mathf.Clamp(targetPosition.z, minBounds.z, maxBounds.z);
 
+        // 6. Плавное перемещение камеры
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, followDelay);
-        //transform.position = targetPosition;
+
+        // 7. Камера всегда смотрит на игрока
         transform.LookAt(squareCenter);
     }
 
@@ -106,16 +129,27 @@ public class CameraMovementController : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
-            float newSize = offset.magnitude - scroll * zoomSpeed;
+            float newSize = offset.z - scroll * zoomSpeed;
             newSize = Mathf.Clamp(newSize, minZoom, maxZoom);
-            offset = offset.normalized * newSize;
+            offset.z = newSize;
+        }
+    }
+    void HandleZoom(bool isAxis = false)
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0 || isAxis)
+        {
+            float newSize = offset.z - scroll * zoomSpeed;
+            newSize = Mathf.Clamp(newSize, minZoom, maxZoom);
+            offset.z = newSize;
         }
     }
 
     void OnDrawGizmos()
     {
-        if (squareCenter == null) return;
+        if (squareCenter == null || _centerLocationObj == null) return;
 
+        // Границы локации (синий)
         Gizmos.color = Color.blue;
         Vector3 halfScale = _centerLocationObj.localScale / 2;
         Vector3 minBounds = _centerLocationObj.position - halfScale;
@@ -125,18 +159,23 @@ public class CameraMovementController : MonoBehaviour
         Gizmos.DrawLine(new Vector3(maxBounds.x, _centerLocationObj.position.y, minBounds.z), new Vector3(maxBounds.x, _centerLocationObj.position.y, maxBounds.z));
         Gizmos.DrawLine(new Vector3(maxBounds.x, _centerLocationObj.position.y, maxBounds.z), new Vector3(minBounds.x, _centerLocationObj.position.y, maxBounds.z));
         Gizmos.DrawLine(new Vector3(minBounds.x, _centerLocationObj.position.y, maxBounds.z), new Vector3(minBounds.x, _centerLocationObj.position.y, minBounds.z));
-        
-        if (_centerLocationObj == null) return;
 
+        // Границы квадрата следования (зелёный)
         Gizmos.color = Color.green;
         Vector3 boundarySize3d = new Vector3(boundarySize.x, 0, boundarySize.y) / 2;
-        //Vector3 halfScale = _centerLocationObj.localScale / 2;
         minBounds = squareCenter - boundarySize3d;
-        minBounds = squareCenter + boundarySize3d;
+        maxBounds = squareCenter + boundarySize3d;
 
         Gizmos.DrawLine(new Vector3(minBounds.x, squareCenter.y, minBounds.z), new Vector3(maxBounds.x, squareCenter.y, minBounds.z));
         Gizmos.DrawLine(new Vector3(maxBounds.x, squareCenter.y, minBounds.z), new Vector3(maxBounds.x, squareCenter.y, maxBounds.z));
         Gizmos.DrawLine(new Vector3(maxBounds.x, squareCenter.y, maxBounds.z), new Vector3(minBounds.x, squareCenter.y, maxBounds.z));
         Gizmos.DrawLine(new Vector3(minBounds.x, squareCenter.y, maxBounds.z), new Vector3(minBounds.x, squareCenter.y, minBounds.z));
+
+        // Линия от камеры к игроку (красная)
+        if (_player != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, squareCenter);
+        }
     }
 }
