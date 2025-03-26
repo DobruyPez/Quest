@@ -11,6 +11,7 @@ TagManager:
   - MixPannelElement
   - DisplayForPickUp
   - InteractionIndicator
+  - RefugeeSeatRequiredTrigger
   layers:
   - Default
   - TransparentFX

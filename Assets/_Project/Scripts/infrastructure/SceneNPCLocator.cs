@@ -36,7 +36,6 @@ namespace Assets.Scripts.infrastructure
 
                 // Инстанцируем NPC
                 GameObject instance = Instantiate(prefab, spawnPosition, spawnRotation, Parent);
-
             }
         }
     }

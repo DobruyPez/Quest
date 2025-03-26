@@ -5,5 +5,11 @@ using UnityEngine;
 public interface ITriggerable
 {
     void Trrigered();
+
 }
 
+// Дополнительный интерфейс для проверки состояния
+public interface ICheckableTrigger : ITriggerable
+{
+    bool IsDone { get; }
+}
