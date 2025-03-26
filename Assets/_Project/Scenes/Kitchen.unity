@@ -3073,7 +3073,7 @@ MonoBehaviour:
   doors:
   - {fileID: 956613663}
   - {fileID: 578292191}
-  _playerSpawnPoint: {fileID: 0}
+  _playerSpawnPoint: {fileID: 853399296}
 --- !u!1 &615788534
 GameObject:
   m_ObjectHideFlags: 0

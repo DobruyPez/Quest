@@ -9,16 +9,10 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/MainMenu.unity
     guid: 046318693fceace49840e762719ff7c9
   - enabled: 1
-    path: Assets/_Project/Scenes/PauseTest.unity
+    path: Assets/_Project/Scenes/MainRoom.unity
     guid: 0cfd04daddf73dd4ca5633b0a7a5157d
-  - enabled: 0
-    path: Assets/_Project/Scenes/CameraTest.unity
-    guid: 23950d40194496446bd92c692cb5d51e
   - enabled: 1
     path: Assets/_Project/Scenes/Kitchen.unity
     guid: 8f62bfa63d19bf540a086982ffb87184
-  - enabled: 0
-    path: Assets/_Project/Scenes/Forge.unity
-    guid: 80c8a1428bcb0664b99ff81b42c87110
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 816a726db77b14b479f83b905ee881e8, type: 2}

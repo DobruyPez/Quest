@@ -15,7 +15,7 @@ public class PlayerAnimator : MonoBehaviour
         position = transform.position;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         //Debug.Log(transform.velocity);
         if (transform.position != position)
@@ -29,4 +29,5 @@ public class PlayerAnimator : MonoBehaviour
         }
         position = transform.position;
     }
+
 }
