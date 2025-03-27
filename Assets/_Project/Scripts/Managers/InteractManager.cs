@@ -4,22 +4,31 @@ using UnityEngine;
 
 public class InteractManager : MonoBehaviour
 {
+    private List<ITriggerable> encounteredTriggers = new List<ITriggerable>();
+    private HashSet<ITriggerable> triggeredSet = new HashSet<ITriggerable>(); // Для отслеживания уже активированных триггеров
     private ITriggerable currentTriggerable;
     private GameObject interactionIndicator;
-    private bool hasInteracted = false; // Флаг, указывающий на то, что взаимодействие уже произошло
-    private Collider currentTriggerCollider; // Запоминаем текущий коллайдер триггера
+    private bool hasInteracted = false;
+    private Collider currentTriggerCollider;
 
     private void OnTriggerEnter(Collider collider)
     {
-        // Если это новый триггер или тот же, но мы выходили и зашли снова
-        if (currentTriggerCollider != collider || !hasInteracted)
+        ITriggerable newTriggerable = collider.gameObject.GetComponent<ITriggerable>();
+        if (newTriggerable != null)
         {
-            currentTriggerable = collider.gameObject.GetComponent<ITriggerable>();
-            currentTriggerCollider = collider;
-            hasInteracted = false; // Сбрасываем флаг при входе в новый триггер
-
-            if (currentTriggerable != null)
+            // Добавляем триггер в список, если его там еще нет
+            if (!encounteredTriggers.Contains(newTriggerable))
             {
+                encounteredTriggers.Add(newTriggerable);
+            }
+
+            // Устанавливаем текущий активный триггер
+            if (currentTriggerCollider != collider || !hasInteracted)
+            {
+                currentTriggerable = newTriggerable;
+                currentTriggerCollider = collider;
+                hasInteracted = false;
+
                 var indicators = collider.gameObject.GetComponentsInChildren<Transform>(true);
                 foreach (var indicator in indicators)
                 {
@@ -43,15 +52,17 @@ public class InteractManager : MonoBehaviour
                 interactionIndicator.SetActive(false);
             }
 
+            encounteredTriggers.Clear();
             currentTriggerable = null;
             currentTriggerCollider = null;
             interactionIndicator = null;
-            hasInteracted = false; // Сбрасываем флаг при выходе из триггера
+            hasInteracted = false;
         }
     }
 
     private void Update()
     {
+        // Обработка текущего триггера
         if (currentTriggerable != null && !hasInteracted)
         {
             bool isInteract = InputManager.GetInstance().GetInteractPressed();
@@ -59,8 +70,10 @@ public class InteractManager : MonoBehaviour
             if (isInteract)
             {
                 Debug.Log("Interacting with: " + currentTriggerable);
-                currentTriggerable.Trrigered();
-                hasInteracted = true; // Устанавливаем флаг после взаимодействия
+                TriggerAllEncounteredOnce(); // Переименованный метод
+                //TryTrigger(currentTriggerable); // Используем новую функцию
+                hasInteracted = true;
+
 
                 if (interactionIndicator != null)
                 {
@@ -68,5 +81,43 @@ public class InteractManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    // Пытаемся активировать триггер, если еще не активировали
+    private void TryTrigger(ITriggerable trigger)
+    {
+        if (!triggeredSet.Contains(trigger))
+        {
+            trigger.Trrigered();
+            triggeredSet.Add(trigger);
+        }
+        else
+        {
+            Debug.Log($"Trigger {trigger} already activated, skipping");
+        }
+    }
+
+    // Метод для запуска всех сохраненных триггеров по одному разу
+    public void TriggerAllEncounteredOnce()
+    {
+        foreach (var trigger in encounteredTriggers)
+        {
+            if (trigger != null)
+            {
+                TryTrigger(trigger);
+            }
+        }
+    }
+
+    // Метод для получения списка всех встреченных триггеров
+    public List<ITriggerable> GetEncounteredTriggers()
+    {
+        return new List<ITriggerable>(encounteredTriggers);
+    }
+
+    // Метод для проверки, был ли триггер уже активирован
+    public bool HasTriggerBeenActivated(ITriggerable trigger)
+    {
+        return triggeredSet.Contains(trigger);
     }
 }
