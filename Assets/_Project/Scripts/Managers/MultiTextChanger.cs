@@ -27,6 +27,7 @@ public class MultiTextChanger : MonoBehaviour
             {
                 _textMeshPro.text = data.doneText;
                 return;
+
             }
         }
     }
