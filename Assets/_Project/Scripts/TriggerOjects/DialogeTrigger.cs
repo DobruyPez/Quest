@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-internal class DialogeTrigger : MonoBehaviour, ITriggerable, ICheckableTrigger
+internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
 {
     [Header("Ink JSON")]
     [SerializeField] private TextAsset _inkJSON;
