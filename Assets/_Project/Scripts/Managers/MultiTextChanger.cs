@@ -1,58 +1,101 @@
 ﻿using UnityEngine;
+using TMPro;
+using System.Collections.Generic;
 
-public class TriggerTextDisplay : MonoBehaviour
+public class MultiTextChanger : MonoBehaviour
 {
-    [SerializeField] private TextMesh _textMesh;
-    [SerializeField] private TriggerableTextData[] _triggerTextData;
+    [SerializeField] private TMP_Text _textMeshPro;
+    [SerializeField] private List<TriggerableTextData> _triggerTextData = new List<TriggerableTextData>();
 
-    private void OnEnable()
+    [Header("Tag Search")]
+    [SerializeField] private string _searchTag;
+    [SerializeField] private bool _autoSearchOnStart = true;
+
+    private void Start()
+    {
+        if (_autoSearchOnStart && !string.IsNullOrEmpty(_searchTag))
+        {
+            FindTriggersByTag(_searchTag);
+        }
+    }
+
+    private void Update()
     {
         foreach (var data in _triggerTextData)
         {
-            if (data.trigger != null)
+            if (data.actionsAreCommitted != null && data.actionsAreCommitted.IsDone)
             {
-           //     data.trigger.OnTriggered += HandleTriggered;
+                _textMeshPro.text = data.doneText;
+                return;
+
             }
         }
     }
 
-    private void OnDisable()
+    public void AddTrigger(ActionsAreCommitted actions, string doneText)
     {
-        foreach (var data in _triggerTextData)
+        _triggerTextData.Add(new TriggerableTextData
         {
-            if (data.trigger != null)
-            {
-           //     data.trigger.OnTriggered -= HandleTriggered;
-            }
-        }
+            actionsAreCommitted = actions,
+            doneText = doneText
+        });
     }
 
-    private void HandleTriggered(ITriggerable triggeredObject)
+    [ContextMenu("Find Triggers By Tag")]
+    public void FindTriggersByTag(string tag = null)
     {
-        foreach (var data in _triggerTextData)
+        if (string.IsNullOrEmpty(tag))
         {
-            if (data.trigger == triggeredObject)
+            if (string.IsNullOrEmpty(_searchTag))
             {
-                // Если триггер поддерживает ICheckableTrigger, проверяем его состояние
-                if (triggeredObject is ICheckableTrigger checkableTrigger)
-                {
-                    _textMesh.text = checkableTrigger.IsDone ? data.doneText : data.defaultText;
-                }
-                else
-                {
-                    _textMesh.text = data.defaultText;
-                }
+                Debug.LogWarning("No tag specified for search", this);
                 return;
             }
+            tag = _searchTag;
         }
-        Debug.LogWarning($"No text data found for triggered object: {triggeredObject}", this);
+
+        if (!TagExists(tag))
+        {
+            Debug.LogWarning($"Tag '{tag}' does not exist", this);
+            return;
+        }
+
+        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject obj in taggedObjects)
+        {
+            var actions = obj.GetComponent<ActionsAreCommitted>();
+            if (actions != null)
+            {
+                // Проверяем, чтобы не добавлять дубликаты
+                if (!_triggerTextData.Exists(x => x.actionsAreCommitted == actions))
+                {
+                    AddTrigger(actions, ""); // Пустой текст, можно установить позже
+                }
+            }
+        }
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(this);
+#endif
     }
 
-    [System.Serializable]
-    public class TriggerableTextData
+    private bool TagExists(string tagName)
     {
-        public ICheckableTrigger trigger;  // Триггер с проверкой состояния
-        public string defaultText;        // Текст по умолчанию (если IsDone == false)
-        public string doneText;          // Текст после выполнения (если IsDone == true)
+        try
+        {
+            GameObject.FindWithTag(tagName);
+            return true;
+        }
+        catch (UnityException)
+        {
+            return false;
+        }
     }
+}
+
+[System.Serializable]
+public class TriggerableTextData
+{
+    public ActionsAreCommitted actionsAreCommitted;
+    public string doneText;
 }

@@ -9,11 +9,13 @@ using Zenject;
 
 namespace Assets.Scripts.TriggerOjects
 {
-    internal class PickupItems : MonoBehaviour, ITriggerable
+    internal class PickupItems : MonoBehaviour, ICheckableTrigger
     {
         [SerializeField] private GameObject _textInd;
         private Pickup _pickup;
         private ToggleObjectOnButtonPress _toggleScript;
+
+        public bool IsDone { get; private set; }
 
         [Inject]
         private void Construct(ToggleObjectOnButtonPress toggleScript)
@@ -39,6 +41,7 @@ namespace Assets.Scripts.TriggerOjects
 
         public void Trrigered()
         {
+            IsDone = true;
             StartCoroutine(ShowIndication());
             Debug.Log("подобрал предмет!");
             AssembledPickups.AddPickup(_pickup);
