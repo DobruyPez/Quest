@@ -4587,7 +4587,7 @@ MonoBehaviour:
   musicSource: {fileID: 2135656548}
   sfxSource: {fileID: 2135656547}
   uiSource: {fileID: 2135656546}
-  backgroundMusic: {fileID: 8300000, guid: 6dd1d83cb805399409e53f3a7523859b, type: 3}
+  defaultMusic: {fileID: 8300000, guid: 6dd1d83cb805399409e53f3a7523859b, type: 3}
 --- !u!4 &2135656550
 Transform:
   m_ObjectHideFlags: 0

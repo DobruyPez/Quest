@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource sfxSource;
     public AudioSource uiSource;
 
-    public AudioClip backgroundMusic;
+    public AudioClip defaultMusic; // Музыка по умолчанию для первой сцены
 
     private void Awake()
     {
@@ -28,21 +29,25 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        // Загружаем сохранённые значения громкости
-        float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);  // Если нет сохранённого значения, по умолчанию 1
-        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
-        float uiVolume = PlayerPrefs.GetFloat("UIVolume", 1f);
+        LoadVolumeSettings();
 
-        // Применяем громкость
-        SetVolume("Volume_Music", musicVolume);
-        SetVolume("Volume_SFX", sfxVolume);
-        SetVolume("Volume_UI", uiVolume);
-
-        // Инициализация музыки, если необходимо
-        if (backgroundMusic != null)
+        if (defaultMusic != null)
         {
-            PlayMusic(backgroundMusic);
+            PlayMusic(defaultMusic);
         }
+
+        // Подписываемся на смену сцены
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ChangeMusicForScene(scene.name);
     }
 
     public void PlayMusic(AudioClip clip)
@@ -53,6 +58,7 @@ public class AudioManager : MonoBehaviour
         musicSource.loop = true;
         musicSource.Play();
     }
+
 
     public void PlaySFX(AudioClip clip)
     {
@@ -68,11 +74,45 @@ public class AudioManager : MonoBehaviour
     {
         if (volume == 0f)
         {
-            audioMixer.SetFloat(parameter, -80f);  // Полная тишина
+            audioMixer.SetFloat(parameter, -80f);
         }
         else
         {
             audioMixer.SetFloat(parameter, Mathf.Log10(volume) * 20);
+        }
+    }
+
+    private void LoadVolumeSettings()
+    {
+        float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        float uiVolume = PlayerPrefs.GetFloat("UIVolume", 1f);
+
+        SetVolume("Volume_Music", musicVolume);
+        SetVolume("Volume_SFX", sfxVolume);
+        SetVolume("Volume_UI", uiVolume);
+    }
+
+    private void ChangeMusicForScene(string sceneName)
+    {
+        AudioClip newMusic = null;
+
+        switch (sceneName)
+        {
+            case "MainMenu":
+                newMusic = Resources.Load<AudioClip>("Music/MainMenuMusic");
+                break;
+            case "MainRoom":
+                newMusic = Resources.Load<AudioClip>("Music/MainRoomMusic");
+                break;
+            case "Forge":
+                newMusic = Resources.Load<AudioClip>("Music/ForgeMusic");
+                break;
+        }
+
+        if (newMusic != null)
+        {
+            PlayMusic(newMusic);
         }
     }
 }
