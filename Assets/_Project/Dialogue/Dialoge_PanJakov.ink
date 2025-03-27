@@ -1,7 +1,6 @@
-VAR TalkedWithMagnate = true
-// ~ ActiveSelf = TalkedWithMagnate
+INCLUDE global.ink
+
 (холодно, с явным раздражением) Ты кто такой? И кто позволил тебе явиться сюда без спросу?#speaker:Петро #portrait:ms_yellow_neutral #layout:right
-// ~ TalkedWithMagnate = true
 *Меня зовут Петро. Я встретился с вашим советником Хансом три дня назад#speaker:Петро #portrait:ms_yellow_neutral #layout:left
 ->main
 *«Простите, ваша милость, я здесь по делу, о котором мне сообщил Ханс#speaker:Петро #portrait:ms_yellow_neutral #layout:left

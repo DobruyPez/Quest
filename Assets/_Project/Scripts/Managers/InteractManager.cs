@@ -53,6 +53,7 @@ public class InteractManager : MonoBehaviour
             }
 
             encounteredTriggers.Clear();
+            triggeredSet.Clear();
             currentTriggerable = null;
             currentTriggerCollider = null;
             interactionIndicator = null;
