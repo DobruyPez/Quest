@@ -10,8 +10,7 @@ internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
     [Header("Dependent Triggers")]
     [SerializeField] private List<ITriggerable> _requiredTriggers = new List<ITriggerable>();
 
-    [Header("Dialogue Selection")]
-    [SerializeField] private bool _randomDialogue = false;
+    [SerializeField] private int _indexForCheck = 1;
 
     private int dialogIndex = 0;
 
@@ -24,7 +23,7 @@ internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
 
     public void Trrigered()
     {
-        if (CanTrigger(1) && _inkJSONDialogues.Count > 0)
+        if (CanTrigger(_indexForCheck) && _inkJSONDialogues.Count > 0)
         {
             if (dialogIndex > _inkJSONDialogues.Count - 1) dialogIndex = _inkJSONDialogues.Count - 1;
             
@@ -34,7 +33,7 @@ internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
             dialogIndex++;
 
             dialogueManager.EnterDialogueMode(selectedDialogue);
-            IsDone = true;
+            if(dialogIndex == _inkJSONDialogues.Count) IsDone = true;
         }
     }
 
