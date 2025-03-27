@@ -5,7 +5,7 @@ public class PokemonNPC : MonoBehaviour
 {
     [SerializeField] private GameObject _miniGame;
     [SerializeField] private GameObject _castle;
-    [SerializeField] private GameObject _dialogPanel;
+    [SerializeField] private GameObject _uiPannel;
     [SerializeField] private CameraSwitch _switch;
     [SerializeField] private GameProcess _miniGameProcessor;
     [SerializeField] private GameObject _menu;
@@ -76,6 +76,7 @@ public class PokemonNPC : MonoBehaviour
     private void StartMiniGame()
     {
         _switch.SwitchCamera();
+        _uiPannel.SetActive(false);
         _miniGame.SetActive(true);
         _castle.SetActive(false);
         _isMiniGameActive = true;
@@ -111,6 +112,7 @@ public class PokemonNPC : MonoBehaviour
 
         // ¬ыполн€ем оставшуюс€ логику конца игры
         _switch.SwitchCamera();
+        _uiPannel.SetActive(true);
         _castle.SetActive(true);
         _isMiniGameFinished = true;
 
