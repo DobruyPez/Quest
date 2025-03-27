@@ -26,7 +26,6 @@ public class MultiTextChanger : MonoBehaviour
             if (data.actionsAreCommitted != null && data.actionsAreCommitted.IsDone)
             {
                 _textMeshPro.text = data.doneText;
-                return;
 
             }
         }
@@ -91,11 +90,4 @@ public class MultiTextChanger : MonoBehaviour
             return false;
         }
     }
-}
-
-[System.Serializable]
-public class TriggerableTextData
-{
-    public ActionsAreCommitted actionsAreCommitted;
-    public string doneText;
 }

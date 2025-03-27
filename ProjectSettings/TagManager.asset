@@ -12,6 +12,7 @@ TagManager:
   - DisplayForPickUp
   - InteractionIndicator
   - RefugeeSeatRequiredTrigger
+  - BlacksmithRequiredTrigger
   layers:
   - Default
   - TransparentFX

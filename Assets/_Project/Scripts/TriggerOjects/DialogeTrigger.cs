@@ -3,11 +3,17 @@ using UnityEngine;
 
 internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
 {
-    [Header("Ink JSON")]
-    [SerializeField] private TextAsset _inkJSON;
+
+    [Header("Ink JSON Dialogues")]
+    [SerializeField] private List<TextAsset> _inkJSONDialogues = new List<TextAsset>(); // Список диалогов
 
     [Header("Dependent Triggers")]
     [SerializeField] private List<ITriggerable> _requiredTriggers = new List<ITriggerable>();
+
+    [Header("Dialogue Selection")]
+    [SerializeField] private bool _randomDialogue = false;
+
+    private int dialogIndex = 0;
 
     public bool IsDone { get; private set; }
 
@@ -18,29 +24,47 @@ internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
 
     public void Trrigered()
     {
-        if (CanTrigger())
+        if (CanTrigger(1) && _inkJSONDialogues.Count > 0)
         {
-            DialogueManager dialogeManager = DialogueManager.GetInstance();
-            dialogeManager.EnterDialogueMode(_inkJSON);
+            if (dialogIndex > _inkJSONDialogues.Count - 1) dialogIndex = _inkJSONDialogues.Count - 1;
+            
+            DialogueManager dialogueManager = DialogueManager.GetInstance();
+
+            TextAsset selectedDialogue = _inkJSONDialogues[dialogIndex];
+            dialogIndex++;
+
+            dialogueManager.EnterDialogueMode(selectedDialogue);
             IsDone = true;
         }
     }
 
-    private bool CanTrigger()
+    private bool CanTrigger(int numberOfDialog)
     {
-        if (IsDone) return false;
-
         foreach (var trigger in _requiredTriggers)
         {
             if (trigger == null) continue;
 
-            // Если триггер реализует интерфейс с проверкой состояния
-            if (trigger is ICheckableTrigger checkable && !checkable.IsDone)
+            if (trigger is ICheckableTrigger checkable && !checkable.IsDone && numberOfDialog == dialogIndex)
             {
                 return false;
             }
         }
         return true;
+    }
+
+    // Добавление нового диалога в список
+    public void AddDialogue(TextAsset newDialogue)
+    {
+        if (newDialogue != null && !_inkJSONDialogues.Contains(newDialogue))
+        {
+            _inkJSONDialogues.Add(newDialogue);
+        }
+    }
+
+    // Очистка списка диалогов
+    public void ClearDialogues()
+    {
+        _inkJSONDialogues.Clear();
     }
 
     // Для отображения в инспекторе
@@ -87,7 +111,7 @@ internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
                 // Проверяем, чтобы не добавить себя самого
                 if (obj == this.gameObject) continue;
 
-                DialogeTrigger trigger = obj.GetComponent<DialogeTrigger>();
+                ITriggerable trigger = obj.GetComponent<ITriggerable>();
                 if (trigger != null)
                 {
                     _requiredTriggers.Add(trigger);
