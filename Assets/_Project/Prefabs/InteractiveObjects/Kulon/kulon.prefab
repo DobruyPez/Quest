@@ -158,21 +158,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemIndicator
       objectReference: {fileID: 0}
+    - target: {fileID: 8042731928459727838, guid: 6251fe2709de2ac4fb0e58361f1df4f6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9117314352634165041, guid: 6251fe2709de2ac4fb0e58361f1df4f6, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: -143777.38
+      value: 30.689041
       objectReference: {fileID: 0}
     - target: {fileID: 9117314352634165041, guid: 6251fe2709de2ac4fb0e58361f1df4f6, type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 6.52e-43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9117314352634165041, guid: 6251fe2709de2ac4fb0e58361f1df4f6, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 8.0098335e+33
+      value: -1955.6484
       objectReference: {fileID: 0}
     - target: {fileID: 9117314352634165041, guid: 6251fe2709de2ac4fb0e58361f1df4f6, type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 6.52e-43
+      value: 6.95e-43
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
