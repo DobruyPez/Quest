@@ -112,12 +112,7 @@ public class DialogueManager : MonoBehaviour
     public void EnterDialogueMode(TextAsset inkJSON)
     {
         _currentStory = new Story(inkJSON.text);
-
-        if (_currentStory.variablesState["ActiveSelf"] is bool isActive && !isActive)
-        {
-            Debug.Log("Dialogue is not active - skipping");
-            return;
-        }
+          
 
         DialogueIsPlaying = true;
         _dialoguePanel.SetActive(true);
