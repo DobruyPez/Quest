@@ -12,13 +12,6 @@ public class UIButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [Header("Звуковые эффекты")]
     [SerializeField] private AudioClip hoverSound; // Звук наведения
     [SerializeField] private AudioClip clickSound; // Звук нажатия
-    private AudioSource audioSource;
-
-    void Awake()
-    {
-        // Добавляем или находим AudioSource
-        audioSource = gameObject.AddComponent<AudioSource>();
-    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -26,7 +19,7 @@ public class UIButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointerExit
             buttonImage.sprite = hoverSprite; // Меняем фон при наведении
 
         if (hoverSound != null)
-            audioSource.PlayOneShot(hoverSound); // Воспроизводим звук наведения
+            AudioManager.Instance.PlayUI(hoverSound); // Воспроизводим звук наведения через AudioManager
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -38,6 +31,6 @@ public class UIButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerClick(PointerEventData eventData)
     {
         if (clickSound != null)
-            audioSource.PlayOneShot(clickSound); // Воспроизводим звук нажатия
+            AudioManager.Instance.PlayUI(clickSound); // Воспроизводим звук нажатия через AudioManager
     }
 }
