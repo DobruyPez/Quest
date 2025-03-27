@@ -11,7 +11,7 @@ public class TriggerTextDisplay : MonoBehaviour
         {
             if (data.trigger != null)
             {
-                data.trigger.OnTriggered += HandleTriggered;
+           //     data.trigger.OnTriggered += HandleTriggered;
             }
         }
     }
@@ -22,7 +22,7 @@ public class TriggerTextDisplay : MonoBehaviour
         {
             if (data.trigger != null)
             {
-                data.trigger.OnTriggered -= HandleTriggered;
+           //     data.trigger.OnTriggered -= HandleTriggered;
             }
         }
     }

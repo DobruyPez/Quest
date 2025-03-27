@@ -89,7 +89,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: NaN, z: NaN, w: 4.0496852e-27}
+  m_BoundingSphereOverride: {x: 2, y: 0, z: NaN, w: 0.02734375}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -106,8 +106,8 @@ GameObject:
   - component: {fileID: 3126207040717238407}
   - component: {fileID: 6539135568137576890}
   m_Layer: 0
-  m_Name: InteractionIndicator
-  m_TagString: Untagged
+  m_Name: DoorIndicator
+  m_TagString: InteractionIndicator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3714,7 +3714,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     type: 1
     collisionMode: 0
