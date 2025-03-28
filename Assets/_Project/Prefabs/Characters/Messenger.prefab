@@ -2815,9 +2815,10 @@ GameObject:
   - component: {fileID: 6363093388602836429}
   - component: {fileID: 2702150124994498829}
   - component: {fileID: 8325271155726114000}
+  - component: {fileID: 4080048706214719954}
   m_Layer: 0
   m_Name: Trigger
-  m_TagString: Untagged
+  m_TagString: QuestForStorage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2876,6 +2877,18 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 561658de4ff74a94f9c027b499096025, type: 3}
   _indexForCheck: 1
   _requeeredDataName: ForgePerfom
+--- !u!114 &4080048706214719954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3984509599709935995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c595d748f8f08a48a355968dd44ce97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4044241201480333291
 GameObject:
   m_ObjectHideFlags: 0

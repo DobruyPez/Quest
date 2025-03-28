@@ -14,6 +14,7 @@ TagManager:
   - RefugeeSeatRequiredTrigger
   - BlacksmithRequiredTrigger
   - ChiefGuardRequiredTrigger
+  - QuestForStorage
   layers:
   - Default
   - TransparentFX
