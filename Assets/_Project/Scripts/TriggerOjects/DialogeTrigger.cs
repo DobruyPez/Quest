@@ -60,7 +60,7 @@ internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
             // Ищем поле с указанным именем
             var field = dataType.GetField(_requeeredDataName);
 
-            if (field != null && field.FieldType == typeof(bool))
+            if (field != null && field.FieldType == typeof(bool) && numberOfDialog == dialogIndex)
             {
                 // Получаем значение поля
                 bool value = (bool)field.GetValue(null);
@@ -69,11 +69,6 @@ internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
                 {
                     return false; // Поле найдено, но равно false
                 }
-            }
-            else
-            {
-                Debug.LogWarning($"Поле {_requeeredDataName} не найдено или не является булевым в DataBetweenLocations");
-                return false;
             }
         }
 
