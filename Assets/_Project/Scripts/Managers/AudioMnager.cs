@@ -108,6 +108,9 @@ public class AudioManager : MonoBehaviour
             case "Forge":
                 newMusic = Resources.Load<AudioClip>("Music/ForgeMusic");
                 break;
+            case "Storage":
+                newMusic = Resources.Load<AudioClip>("Music/StorageMusic");
+                break;
         }
 
         if (newMusic != null)
