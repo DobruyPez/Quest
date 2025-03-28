@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultFootsteps:
-  - {fileID: 8300000, guid: 629132390385cdf4a88cbfb1b2f7a12e, type: 3}
+  - {fileID: 8300000, guid: ce992df816f1580448160a4efe92b251, type: 3}
 --- !u!114 &5049994645591148800
 MonoBehaviour:
   m_ObjectHideFlags: 0

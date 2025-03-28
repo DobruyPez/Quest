@@ -19,10 +19,10 @@ public class PlayerAnimator : MonoBehaviour
         lastPosition = transform.position;
 
         // Добавляем звуки для разных сцен
-        sceneFootstepSounds.Add("MainMenu", new List<AudioClip>() { Resources.Load<AudioClip>("Footsteps/Wood") });
+        
         sceneFootstepSounds.Add("MainRoom", new List<AudioClip>() {Resources.Load<AudioClip>("Footsteps/Wood")});
         sceneFootstepSounds.Add("Forge", new List<AudioClip>() {Resources.Load<AudioClip>("Footsteps/Grass")});
-
+        sceneFootstepSounds.Add("Storage", new List<AudioClip>() { Resources.Load<AudioClip>("Footsteps/Stone") });
         // Подписка на смену сцены
         SceneManager.sceneLoaded += OnSceneLoaded;
 

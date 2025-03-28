@@ -35,10 +35,7 @@ public class PlayerMoveController : MonoBehaviour
         {
             box.OnActivated += CollidedWithMovingObject;
         }
-        else
-        {
-            Debug.LogWarning("Box не найден!");
-        }
+        
         _coll = GetComponent<BoxCollider>();
         _rb = GetComponent<Rigidbody>();
         _thisTransform = GetComponent<Transform>();
