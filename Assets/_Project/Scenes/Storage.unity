@@ -28334,8 +28334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NPC: []
   Parent: {fileID: 1903880863}
-  StartPoints:
-  - {fileID: 0}
+  StartPoints: []
 --- !u!1001 &1327975982
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43934,7 +43933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _miniGame: {fileID: 813755565}
   _castle: {fileID: 0}
-  _dialogPanel: {fileID: 0}
+  _uiPannel: {fileID: 0}
   _switch: {fileID: 2064488508}
   _miniGameProcessor: {fileID: 1005588566}
   _menu: {fileID: 1066599638}
@@ -44008,8 +44007,8 @@ MonoBehaviour:
   Parent: {fileID: 813755566}
   CameraTransform: {fileID: 99277459}
   CanvasTransform: {fileID: 1116351398}
-  PlayerHPBarPrefab: {fileID: 882619566126002653, guid: 0a58ad1d7b7fbf84ebb678e9aad08cd9, type: 3}
-  EnemyHPBarPrefab: {fileID: 5895284377046553130, guid: 9626ce524a9e64d4fb2aa4f4bea7d221, type: 3}
+  PlayerHPBarPrefab: {fileID: 882619566126002653, guid: 97a6493a12c9b3b429f72a1d4c6ae529, type: 3}
+  EnemyHPBarPrefab: {fileID: 3385993963981474361, guid: 55cee44462026d7479a46966e405b9fc, type: 3}
   SpawnPoint: {fileID: 1694038995}
   EnemyPrefab: {fileID: 8816934456661431518, guid: c66df2a20c370b04b95cc4e57f18475c, type: 3}
   MineSpawnerObject: {fileID: 410344084}

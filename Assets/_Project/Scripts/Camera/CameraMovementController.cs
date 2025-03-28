@@ -35,6 +35,7 @@ public class CameraMovementController : MonoBehaviour
             Debug.LogError("Player is not assigned!");
             enabled = false;
             return;
+            //_player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
         if (_centerLocationObj == null)

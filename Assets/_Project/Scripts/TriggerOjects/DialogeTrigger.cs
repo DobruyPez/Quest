@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Assets._Project.Scripts.TriggerOjects;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
@@ -49,6 +51,32 @@ internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
                 return false;
             }
         }
+
+        if (!string.IsNullOrEmpty(_requeeredDataName))
+        {
+            // Получаем тип DataBetweenLocations
+            Type dataType = typeof(DataBetweenLocations);
+
+            // Ищем поле с указанным именем
+            var field = dataType.GetField(_requeeredDataName);
+
+            if (field != null && field.FieldType == typeof(bool))
+            {
+                // Получаем значение поля
+                bool value = (bool)field.GetValue(null);
+
+                if (!value)
+                {
+                    return false; // Поле найдено, но равно false
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Поле {_requeeredDataName} не найдено или не является булевым в DataBetweenLocations");
+                return false;
+            }
+        }
+
         return true;
     }
 
