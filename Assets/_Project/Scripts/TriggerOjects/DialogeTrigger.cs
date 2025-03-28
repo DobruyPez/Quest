@@ -11,6 +11,7 @@ internal class DialogeTrigger : MonoBehaviour, ICheckableTrigger
     [SerializeField] private List<ITriggerable> _requiredTriggers = new List<ITriggerable>();
 
     [SerializeField] private int _indexForCheck = 1;
+    [SerializeField] private string _requeeredDataName = "";
 
     private int dialogIndex = 0;
 

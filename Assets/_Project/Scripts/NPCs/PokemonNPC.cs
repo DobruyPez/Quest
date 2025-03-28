@@ -1,3 +1,4 @@
+using Assets._Project.Scripts.TriggerOjects;
 using System.Collections;
 using UnityEngine;
 
@@ -115,6 +116,8 @@ public class PokemonNPC : MonoBehaviour
         _uiPannel.SetActive(true);
         _castle.SetActive(true);
         _isMiniGameFinished = true;
+        DataBetweenLocations.ForgePerfom = true;
+
 
         Debug.LogWarning("Мини-игра завершена. Победитель: " + winnerName);
     }
